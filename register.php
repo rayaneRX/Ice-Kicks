@@ -6,16 +6,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $email = $_POST['email'];
     $password = password_hash($_POST['password'], PASSWORD_BCRYPT); // Hash the password
 
-    // Insert user data into the database
-    $sql = "INSERT INTO users (username, email, password) VALUES ('$username', '$email', '$password')";
+    try {
+        // Use prepared statements to prevent SQL injection
+        $stmt = $pdo->prepare("INSERT INTO users (username, email, password) VALUES (?, ?, ?)");
+        $stmt->execute([$username, $email, $password]);
 
-    if ($conn->query($sql) === TRUE) {
+        // Registration successful
         echo "Registration successful!";
-        header('Location: login.html'); // Redirect to login page after successful registration
-    } else {
-        echo "Error: " . $sql . "<br>" . $conn->error;
+        header('Location: login.html'); // Redirect to login page
+        exit();
+    } catch (PDOException $e) {
+        // Handle database errors gracefully
+        echo "Error: Unable to register. Please try again later.";
+        // Optional: log the error message for debugging
+        // error_log($e->getMessage());
     }
-
-    $conn->close();
 }
 ?>

@@ -1,9 +1,9 @@
 <?php
-// Database connection
+// Updated database connection
 $host = 'localhost';
-$user = 'root'; // Change if your MySQL username is different
-$password = ''; // Change if your MySQL password is set
-$dbname = 'ice_kicks_db'; // Make sure this matches your database name
+$user = 'root'; // Update with your MySQL username if different
+$password = ''; // Update with your MySQL password if set
+$dbname = 'ice_kicks_db'; // Ensure this matches the new database name
 
 try {
     $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $user, $password);
