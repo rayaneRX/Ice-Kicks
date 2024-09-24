@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ice Kicks - Register</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"> <!-- FontAwesome for icons -->
+</head>
+<body>
+<!-- Header -->
+<header class="main-header">
+  <div class="container">
+    <div class="header-content">
+      <a href="index.html" class="brand">Ice Kicks</a>
+      <nav class="navbar">
+        <ul class="nav-menu">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="how-it-works.html">How It Works</a></li>
+          <li><a href="products.html">Products</a></li>
+          <li><a href="cart.html">Cart</a></li>
+          <li><a href="contact.html">Contact Us</a></li>
+          <li><a href="login.html">Log In</a></li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<!-- Register Section -->
+<section class="register-section">
+  <h2>Create a New Account</h2>
+  <form id="register-form">
+    <input type="text" name="username" placeholder="Username" required>
+    <input type="email" name="email" placeholder="Email" required>
+    <input type="password" name="password" placeholder="Password" required>
+    <button type="submit">Register</button>
+  </form>
+  <p>Already have an account? <a href="login.html">Log In here</a></p>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-content">
+    <div class="footer-logo">
+      <img src="images/logo.png" alt="Ice Kicks Logo">
+    </div>
+    <div class="footer-links">
+      <a href="index.html">Home</a>
+      <a href="how-it-works.html">How It Works</a>
+      <a href="products.html">Products</a>
+      <a href="contact.html">Contact Us</a>
+    </div>
+    <div class="footer-social">
+      <a href="#"><i class="fab fa-facebook-f"></i></a>
+      <a href="#"><i class="fab fa-instagram"></i></a>
+      <a href="#"><i class="fab fa-twitter"></i></a>
+    </div>
+  </div>
+  <p>&copy; 2024 Ice Kicks. All rights reserved.</p>
+</footer>
+
+<script>
+  document.getElementById('register-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const username = e.target.username.value;
+    const email = e.target.email.value;
+    const password = e.target.password.value;
+
+    try {
+      const response = await fetch('/auth/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, email, password })
+      });
+
+      if (response.ok) {
+        alert('Registration successful');
+        window.location.href = 'login.html'; // Redirect to login page after successful registration
+      } else {
+        const error = await response.json();
+        alert('Registration failed: ' + error.message);
+      }
+    } catch (error) {
+      console.error('Error registering:', error);
+      alert('An error occurred. Please try again.');
+    }
+  });
+</script>
+
+</body>
+</html>

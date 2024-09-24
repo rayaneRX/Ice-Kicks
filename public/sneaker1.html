@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Air Jordan 1 - Ice Kicks</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<!-- Header -->
+<header class="main-header">
+  <div class="container">
+    <div class="header-content">
+      <a href="index.html" class="brand">Ice Kicks</a>
+      <nav class="navbar">
+        <ul class="nav-menu">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="how-it-works.html">How It Works</a></li>
+          <li><a href="products.html">Products</a></li>
+          <li><a href="cart.html">Cart</a></li>
+          <li><a href="contact.html">Contact Us</a></li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<!-- Product Detail Section -->
+<section class="product-detail">
+  <h1>Air Jordan 1</h1>
+  <div class="product-images">
+    <img src="images/sneaker1.jpg" alt="Air Jordan 1">
+    <img src="images/sneaker1-alt.jpg" alt="Air Jordan 1 Side View">
+    <img src="images/sneaker1-back.jpg" alt="Air Jordan 1 Back View">
+  </div>
+  <div class="product-info">
+    <h2>Price: $200</h2>
+    <p>The Air Jordan 1 is a timeless sneaker that never goes out of style. A must-have for every sneakerhead.</p>
+    
+    <!-- Size Selector -->
+    <label for="size">Choose your size:</label>
+    <select id="size" class="size-selector">
+      <option value="7">7</option>
+      <option value="8">8</option>
+      <option value="9">9</option>
+      <option value="10">10</option>
+      <option value="11">11</option>
+    </select>
+
+    <!-- Add to Cart Button -->
+    <button id="add-to-cart" data-product-id="1" data-product-name="Air Jordan 1" data-product-price="200">Add to Cart</button>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <p>&copy; 2024 Ice Kicks. All rights reserved.</p>
+</footer>
+
+<!-- JavaScript to handle Add to Cart functionality -->
+<script>
+  document.getElementById('add-to-cart').addEventListener('click', async function () {
+  const productId = this.getAttribute('data-product-id');
+  const size = document.getElementById('size').value;
+
+  try {
+    const response = await fetch('/api/cart/add', { // Correct URL to match updated route
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        userId: 1, // Replace with the actual logged-in user's ID
+        productId: productId,
+        size: size,
+        quantity: 1
+      })
+    });
+
+    if (response.ok) {
+      alert('Product added to cart successfully!');
+    } else {
+      const error = await response.json();
+      alert('Error adding to cart: ' + error.message);
+    }
+  } catch (error) {
+    console.error('Error adding product to cart:', error);
+    alert('An error occurred while adding the product to the cart.');
+  }
+});
+</script>
+</body>
+</html>
